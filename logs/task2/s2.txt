@@ -1,0 +1,49 @@
+[s6-init] making user provided files available at /var/run/s6/etc...exited 0.
+[s6-init] ensuring user provided files have correct perms...exited 0.
+[fix-attrs.d] applying ownership & permissions fixes...
+[fix-attrs.d] done.
+[cont-init.d] executing container initialization scripts...
+[cont-init.d] done.
+[services.d] starting services
+/opt/bin/serf agent --join ha --tag role=backend
+==> Starting Serf agent...
+[services.d] done.
+==> Starting Serf agent RPC...
+==> Serf agent running!
+         Node name: '6f38f0144072'
+         Bind addr: '0.0.0.0:7946'
+                       RPC addr: '127.0.0.1:7373'
+                      Encrypted: false
+                       Snapshot: false
+                        Profile: lan
+    Message Compression Enabled: true
+==> Joining cluster...(replay: false)
+==> 1 error occurred:
+        * Failed to join 192.168.42.42: dial tcp 192.168.42.42:7946: connect: connection refused
+
+
+Application started
+/opt/bin/serf agent --join ha --tag role=backend
+==> Starting Serf agent...
+==> Starting Serf agent RPC...
+==> Serf agent running!
+         Node name: '6f38f0144072'
+         Bind addr: '0.0.0.0:7946'
+                       RPC addr: '127.0.0.1:7373'
+                      Encrypted: false
+                       Snapshot: false
+                        Profile: lan
+    Message Compression Enabled: true
+==> Joining cluster...(replay: false)
+    Join completed. Synced with 1 initial agents
+
+==> Log data will now stream in as it occurs:
+
+    2020/12/09 17:21:11 [INFO] agent: Serf agent starting
+    2020/12/09 17:21:12 [INFO] serf: EventMemberJoin: 6f38f0144072 192.168.42.22
+    2020/12/09 17:21:12 [INFO] agent: joining: [ha] replay: false
+    2020/12/09 17:21:12 [INFO] serf: EventMemberJoin: 5ba3a7ffde17 192.168.42.11
+    2020/12/09 17:21:12 [INFO] serf: EventMemberJoin: b74488059da2 192.168.42.42
+    2020/12/09 17:21:12 [INFO] agent: joined: 1 nodes
+HEAD / 200 12.556 ms - 129
+    2020/12/09 17:21:13 [INFO] agent: Received event: member-join
