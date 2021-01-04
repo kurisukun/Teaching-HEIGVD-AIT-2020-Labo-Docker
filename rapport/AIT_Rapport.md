@@ -2,13 +2,21 @@
 
 **Auteurs:** Barros Henriques Chris, Daubresse Gaëtan, Noël Éric
 
-[TOC]
+### Table des matières 
+
+0. [Identify issues and install the tools](#task-0)
+1. [Add a process supervisor to run several processes](#task-1)
+2. [Add a tool to manage membership in the web server cluster](#task-2)
+3. [React to membership changes](#task-3)
+4. [Use a template engine to easily generate configuration files](#task-4)
+5. [Generate a new load balancer configuration when membership changes](#task-5)
+6. [Make the load balancer automatically reload the new configuration](#task-6)
 
 ### Introduction 
 
 Dans ce laboratoire nous allons étudier la configuration de HAProxy ainsi que la manière d'implémenter un bon cluster. 
 
-### Task 0: Identify issues and install the tools
+### <a name="task-0"></a> Task 0: Identify issues and install the tools
 
 #### Identify issues
 
@@ -85,7 +93,7 @@ Il faudrait utiliser un système de templating afin que les fichier de configura
 
 2. Liens de notre dépôt github https://github.com/kurisukun/Teaching-HEIGVD-AIT-2020-Labo-Docker
 
-### Task 1: Add a process supervisor to run several processes
+### <a name="task-1"></a> Task 1: Add a process supervisor to run several processes
 
 1. Screenshot de la stats page de HAProxy après avoir ajouté un superviseur : 
 
@@ -102,7 +110,7 @@ Il faudrait utiliser un système de templating afin que les fichier de configura
 
    Nous n'avons pas rencontré de difficulté particulière pour la réalisation de cette tâche. 
 
-### Task 2: Add a tool to manage membership in the web server cluster
+### <a name="task-2"></a> Task 2: Add a tool to manage membership in the web server cluster
 
 > 1. Provide the docker log output for each of the containers: `ha`, `s1` and `s2`.
 
@@ -122,7 +130,7 @@ Serf détecte très rapidement s'il y a une erreur dans une des nodes et avertit
 
 Serf utilise un Gossip Protocol qui est basé sur le protocole SWIM. Ce protocole permet de propager un message en broadcast au cluster. Serf interroge périodiquement les nœuds, pour vérifier s'ils sont toujours actifs. Si ce n'est pas le cas, Serf définit ce nœud comme suspicious et propage cette information au reste du cluster. Le statut suspicious n'exclut pas encore le node du cluster. Si le nœud suspect ne contredit pas ce statut durant un intervalle de temps configurable, le nœud est considéré comme dead par serf qui propagera cette information au reste du cluster. 
 
-### Task 3: React to membership changes
+### <a name="task-3"></a> Task 3: React to membership changes
 
 > 1. Provide the docker log output for each of the containers:  `ha`, `s1` and `s2`.
 >    Put your logs in the `logs` directory you created in the previous task.
@@ -134,7 +142,7 @@ Fournit dans le fichier log.
 
 Fournit dans le fichier log. 
 
-### Task 4: Use a template engine to easily generate configuration files
+### <a name="task-4"></a> Task 4: Use a template engine to easily generate configuration files
 
 > 1. You probably noticed when we added `xz-utils`, we have to rebuild
 >    the whole image which took some time. What can we do to mitigate
@@ -172,7 +180,7 @@ Fournit dans le fichier log.
 
 Le problème vient du fait que chaque fois qu'un node se connecte au cluster, l'output indiquant sa connexion est écrasé au lieu d'être ajouté. C'est un problème car cela signifie que tout n'est pas loggé correctement et qu'il faudrait lancé manuellement chaque node individuellement et s'assurer à chaque fois qu'il s'est correctement connecté.
 
-### Task 5: Generate a new load balancer configuration when membership changes
+### <a name="task-5"></a> Task 5: Generate a new load balancer configuration when membership changes
 
 > 1. Provide the file `/usr/local/etc/haproxy/haproxy.cfg` generated in
 >    the `ha` container after each step. Three files are expected.
@@ -197,7 +205,7 @@ Fournit dans le fichier logs
 
 Fournit dans le fichier logs 
 
-### Task 6: Make the load balancer automatically reload the new configuration
+### <a name="task-6"></a> Task 6: Make the load balancer automatically reload the new configuration
 
 > 1. Take a screenshots of the HAProxy stat page showing more than 2 web
 >    applications running. Additional screenshots are welcome to see a
