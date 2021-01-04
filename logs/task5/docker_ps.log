@@ -1,0 +1,4 @@
+CONTAINER ID   IMAGE               COMMAND   CREATED              STATUS              PORTS                                                                                    NAMES
+c07218b5ce39   ait_labo4_webapp2   "/init"   About a minute ago   Up About a minute   3000/tcp, 7373/tcp, 7946/tcp                                                             s2
+ff565adb04b2   ait_labo4_webapp1   "/init"   3 minutes ago        Up 3 minutes        3000/tcp, 7373/tcp, 7946/tcp                                                             s1
+3a5b963a30e5   ait_labo4_ha        "/init"   6 minutes ago        Up 6 minutes        0.0.0.0:80->80/tcp, 7373/tcp, 0.0.0.0:1936->1936/tcp, 0.0.0.0:9999->9999/tcp, 7946/tcp   ha
