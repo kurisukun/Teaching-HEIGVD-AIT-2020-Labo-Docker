@@ -22,11 +22,11 @@ Dans ce laboratoire nous allons étudier la configuration de HAProxy ainsi que l
 
 > 1. **[M1]** Do you think we can use the current solution for a production environment? What are the main problems when deploying it in a production environment?
 
-Non cette solution ne serait pas adaptée en production. Il y a un single point of failure au niveau du load balancer. Cela signifie que ci celui-ci crash le système ne sera plus opérationnel. De plus si une des nodes venaient à ne plus fonctionner, il faudrait la redémarrer manuellement.  
+Non, cette solution ne serait pas adaptée en production. Il y a un single point of failure au niveau du load balancer. Cela signifie que si celui-ci crash, le système ne sera plus opérationnel. De plus, si une des nodes venait à ne plus fonctionner, il faudrait la redémarrer manuellement.  
 
 > 2. **[M2]** Describe what you need to do to add new `webapp` container to the infrastructure. Give the exact steps of what you have to do without modifiying the way the things are done. Hint: You probably have to modify some configuration and script files in a Docker image.
 
-1. Pour ajouter un nouveau nœud à notre infrastructure nous devons modifier le fichier docker-compose.yml comme ceci. 
+1. Pour ajouter un nouveau nœud à notre infrastructure, nous devons modifier le fichier docker-compose.yml comme ceci:
 
 ```
 services :
@@ -52,7 +52,7 @@ WEBAPP_3_NAME=s3
 WEBAPP_3_IP=192.168.42.13
 ```
 
-3. Pour terminer nous ajoutons la webapp3 au fichier de configuration `haproxy.cfg` de HAProxy. 
+3. Pour terminer, nous ajoutons la webapp3 au fichier de configuration `haproxy.cfg` de HAProxy. 
 
 ```
 server s3 ${WEBAPP_3_IP}:3000 check
@@ -81,9 +81,9 @@ En l'état non, il faudrait modifier les Dockerfile de manière à ce que pour c
 >
 >    What happens if we add more web server nodes? Do you think it is really dynamic? It's far away from being a dynamic configuration. Can you propose a solution to solve this?
 
-Pour le moment si nous ajoutons une nouvelle node nous devrons ajouter manuellement des lignes aux fichiers de configurations comme décrit au point m2. Cela n'est pas une solution dynamique. 
+Pour le moment, si nous ajoutons une nouvelle node nous devrons ajouter manuellement des lignes aux fichiers de configurations comme décrit au point M2. Cela n'est pas une solution dynamique. 
 
-Il faudrait utiliser un système de templating afin que les fichier de configuration soit généré automatiquement lors de l'ajout de nouvelles nodes. Nous pourrions par exemple utiliser `NodeJS` et  `Handlebars` comme moteur de template. 
+Il faudrait utiliser un système de templating afin que les fichiers de configuration soient générés automatiquement lors de l'ajout de nouvelles nodes. Nous pourrions, par exemple, utiliser `NodeJS` et  `Handlebars` comme moteur de template. 
 
 #### Install the tools
 
@@ -149,13 +149,13 @@ Fournit dans le fichier log.
 >    that? Take a look at the Docker documentation on
 >    [image layers](https://docs.docker.com/engine/userguide/storagedriver/imagesandcontainers/#images-and-layers).
 
-A chaque fois que docker exécute une commande, celui crée une nouvelle couche. Cette couche correspond à la différence dans le système de fichier avant et après l'exécution de cette commande. Chaque couche utilise de l'espace de stockage, il est donc important d'utiliser une seule est même commande lorsque nous travaillons dans le même fichier. 
+À chaque fois que Docker exécute une commande, celui-ci crée une nouvelle couche. Cette couche correspond à la différence dans le système de fichier avant et après l'exécution de cette commande. Chaque couche utilise de l'espace de stockage, il est donc important d'utiliser une seule et même commande lorsque nous travaillons dans le même fichier. 
 
-Docker utilise un système de cache pour chacune des couches. Si nous effectuons un deuxième build et que les commandes précédentes n'ont pas changées docker utilisera le cache ce qui permettra de gagner du temps. Ceci implique que tous les composants qui ne changent pas souvent doivent être placé en début de fichier afin que le cache puisse être utilisé. Les composant changeant fréquemment seront placé de préférence en fin de fichier. 
+Docker utilise un système de cache pour chacune des couches. Si nous effectuons un deuxième build et que les commandes précédentes n'ont pas changé, Docker utilisera le cache ce qui permettra de gagner du temps. Ceci implique que tous les composants qui ne changent pas souvent doivent être placés en début de fichier afin que le cache puisse être utilisé. Les composants changeant fréquemment seront placés de préférence en fin de fichier. 
 
-squashing est une option permettant de, une fois le build terminé, stocker la différence entre chacune des couches dans une nouvelle couche.
+Le squashing est une option permettant de, une fois le build terminé, stocker la différence entre chacune des couches dans une nouvelle couche.
 
-flattening permet également de créer une seule est même couche pour une image docker qui en contient plusieurs. Pour cela nous utilisons la commande : `docker export <image> | docker import <resulting image` 
+Le flattening permet également de créer une seule et même couche pour une image docker qui en contient plusieurs. Pour cela, nous utilisons la commande : `docker export <image> | docker import <resulting image>` 
 
 > 2. Propose a different approach to architecture our images to be able
 >    to reuse as much as possible what we have done. Your proposition
@@ -212,7 +212,7 @@ Fournit dans le fichier logs
 >    sequence of experimentations like shutting down a node and starting
 >    more nodes.
 
-Au début nous démarrons 4 nodes en plus de ha backend. 
+Au début, nous démarrons 4 nodes en plus de ha en backend. 
 
 ![](img/image_2021-01-04_11-37-20.png)
 
@@ -238,11 +238,11 @@ Fournit dans le fichier logs.
 >    improvements or ways to do the things differently. If any, provide
 >    references to your readings for the improvements.
 
-La solution finale remplit les objectifs voulu. Nous pourrions essayer de la rendre plus performante en réduisant le temps nécessaire à HAProxy pour reconnaître les nouvelles nodes. 
+La solution finale remplit les objectifs voulus. Nous pourrions essayer de la rendre plus performante en réduisant le temps nécessaire à HAProxy pour reconnaître les nouvelles nodes. 
 
 ### Difficultés rencontrées 
 
-Durant ce laboratoire la configuration était particulièrement lourde et nous n'avons pas toujours compris tout de suite le but des manipulations. 
+Durant ce laboratoire, la configuration était particulièrement lourde et nous n'avons pas toujours compris tout de suite le but des manipulations. 
 
 ### Conclusion 
 
